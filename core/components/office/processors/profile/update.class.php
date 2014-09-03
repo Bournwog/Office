@@ -26,6 +26,18 @@ class officeProfileUserUpdateProcessor extends modUserUpdateProcessor {
 	 * @return boolean
 	 */
 	public function beforeSet() {
+			$props=$this->getProperties();
+			$extended2 = array();
+			$arrF=array_merge(array('requiredFields','avatarPath','avatarParams'),array_keys($this->object->Profile->toArray()),array_keys($this->object->toArray()));
+			foreach($props as $field=>$value){
+                if(!in_array($field,$arrF)){
+			    	$extended2[$field] = $value;
+			    }
+			}
+			$extended = $this->object->Profile->get('extended');
+			$extended = is_array($extended) ? array_merge($extended,$extended2) : $extended2;
+			$this->setProperty('extended',$extended);
+			
 		$fields = $this->getProperty('requiredFields', '');
 		if (!empty($fields) && is_array($fields)) {
 			foreach ($fields as $field) {
