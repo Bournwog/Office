@@ -106,8 +106,9 @@ class officeProfileController extends officeDefaultController {
 		}
 
 		$user = $this->modx->user->toArray();
+		$extended=$this->modx->user->Profile->get('extended');
 		$profile = $this->modx->user->Profile->toArray();
-		$pls = array_merge($pls, $profile, $user);
+		$pls = array_merge($pls, $profile, $user,$extended);
 		if (!empty($_GET['off_req'])) {
 			$required = explode('-', $_GET['off_req']);
 			foreach ($required as $v) {
